@@ -1,0 +1,59 @@
+name: Deploy static content to GitHub Pages
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # Step 2: Install Node.js
+      - name: Set up Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 'lts/*'
+
+      # Step 3: Install pnpm globally
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      # Step 4: Install dependencies using pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Step 5: Build the static site
+      - name: Build
+        run: pnpm run build
+
+      # Step 6: Configure GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Step 7: Upload the build artifact
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './build'
+
+      # Step 8: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
