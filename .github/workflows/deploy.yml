@@ -29,10 +29,13 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: lts/*
-          cache: 'pnpm'  # use pnpm caching
+          cache: 'pnpm'  # pnpm cache
+
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile  # compatible with pnpm
+        run: pnpm install --frozen-lockfile
 
       - name: Build
         run: pnpm run build
