@@ -7,5 +7,9 @@ export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
   base: process.env.NODE_ENV === "production"
     ? "https://lucasjoel.com/"
-    : "/"
+    : "/",
+  build: {
+    copyPublicDir: true
+  },
+  publicDir: "public/"
 });
