@@ -7,7 +7,6 @@ export default function Home() {
     return (
         <div className="w-full min-h-screen flex flex-col">
             <Header />
-            
             <div className="p-8 border-b border-neutral-800">
                 <h1 className="text-5xl font-bold mb-3 text-neutral-100">
                     Lucas Joel
