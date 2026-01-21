@@ -4,9 +4,8 @@ import Link from "../global/link";
 export default function NavHeader() {
     return (
         <div className="p-4">
-            <div className="text-2xl font-semibold mb-4 flex flex-row justify-between">
+            <div className="text-2xl font-semibold mb-4 flex flex-row justify-between ">
                 <div>Lucas Joel</div>
-                {/* <button className="bg-neutral-800 rounded p-1"><TbLayoutSidebarLeftExpandFilled size={"24px"} /></button> */}
             </div>
             <div className="space-y-1 text-sm text-neutral-400 mb-4">
                 <div>CS @ <Link href="https://www.mcmaster.ca/">McMaster University</Link></div>
