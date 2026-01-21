@@ -33,7 +33,10 @@ export default function Home() {
 
                 <Card name="Blog Activity" href="/blog">
                     <div className="space-y-2 text-sm text-neutral-400">
-                        <div>Coming Soon...</div>
+                        <div className="flex flex-row justify-between">
+                            <Link newTab={false} href="/blog/post?article=hey-im-lucas">👋 Hey! I'm Lucas</Link>
+                            <span className="text-neutral-600 font-medium">January 21st, 2026</span>
+                        </div>
                     </div>
                 </Card>
 
