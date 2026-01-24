@@ -5,12 +5,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import Navbar from "./components/navbar/navbar";
 import { useState, useEffect } from "react";
+import { BiArrowToRight } from "react-icons/bi";
+import { CgArrowRight, CgClose, CgMenu } from "react-icons/cg";
+import { GiHamburger } from "react-icons/gi";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,13 +30,32 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const navigation = useNavigation();
   const [navbarVisible, setNavbarVisible] = useState<boolean>(false)
+  const [isDesktop, setIsDesktop] = useState<boolean | undefined>(undefined)
+  const [mounted, setMounted] = useState<boolean>(false)
 
   useEffect(() => {
     // Check if we're on desktop (md breakpoint is 768px)
-    const isDesktop = window.innerWidth >= 768;
-    setNavbarVisible(isDesktop);
+    const isDesktopForOpening = window.innerWidth >= 768;
+    setNavbarVisible(isDesktopForOpening);
+    setIsDesktop(isDesktopForOpening);
+    
+    // Wait for navbar animation to complete before showing button
+    setTimeout(() => setMounted(true), 300);
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [])
 
   return (
     <html lang="en">
@@ -55,19 +78,35 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="flex md:flex-row">
-        {/* Hamburger button - visible on all screens */}
+        {/* Top bar - desktop only, shows when navbar is hidden */}
+        <div className={`hidden md:block fixed top-0 left-0 right-0 bg-neutral-900 border-b border-neutral-800 z-50 transition-transform duration-300 ${
+          mounted && !navbarVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}>
+          <div className="flex items-center gap-4 h-16 px-4">
+            <button 
+              onClick={() => setNavbarVisible(!navbarVisible)}
+              className="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg border border-neutral-700 transition-colors"
+              aria-label="Toggle menu"
+            >
+              <CgArrowRight className="text-xl" />
+            </button>
+            <h1 className="text-xl font-semibold">Lucas Joel</h1>
+          </div>
+        </div>
+
+        {/* Mobile button - only on mobile */}
         <button 
           onClick={() => setNavbarVisible(!navbarVisible)}
-          className={`fixed top-4 right-4 md:right-auto z-60 p-2 bg-neutral-800/50 rounded border border-neutral-700 hover:bg-neutral-700 transition-all ${navbarVisible ? 'md:left-76' : 'md:left-4'}`}
+          className={`md:hidden fixed top-4 right-4 p-3 bg-neutral-800 hover:bg-neutral-700 rounded-lg border border-neutral-700 z-60 transition-opacity duration-150 ${
+            !mounted || navigation.state === "loading" ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
           aria-label="Toggle menu"
         >
-          <svg className="w-6 h-6 text-neutral-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {navbarVisible ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <CgClose className="text-xl" />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <CgMenu className="text-xl" />
             )}
-          </svg>
         </button>
 
         {/* Overlay backdrop - only on mobile when navbar is open */}
@@ -79,7 +118,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         <Navbar visible={navbarVisible} setVisible={setNavbarVisible} />
-        {children}
+        <div className={`flex-1 h-screen overflow-y-auto transition-all duration-300 ${navbarVisible ? 'md:ml-84 md:pt-0' : 'md:ml-0 md:pt-16'}`}>
+          {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>

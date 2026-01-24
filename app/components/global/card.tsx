@@ -12,8 +12,8 @@ export default function Card(props: CardProps) {
     const isClickable = props.href !== undefined;
 
     return (
-        <a
-            href={props.href}
+        <div
+            onClick={() => {if (props.href !== undefined) window.location.href = props.href}}
             className={
                 "h-full block bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden transition-all " +
                 (isClickable ? "hover:border-neutral-700 hover:bg-neutral-900/80 cursor-pointer" : "")
@@ -36,6 +36,6 @@ export default function Card(props: CardProps) {
                     </div>
                 }
             </div>
-        </a>
+        </div>
     )
 }

@@ -10,7 +10,11 @@ interface LinkProps {
 export default function Link(props: LinkProps) {
     const openNewTab = props.newTab === (false || undefined)
     return (
-        <a target={openNewTab ? "_blank" : "_self"} href={props.href} className={"font-bold text-neutral-300 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-neutral-500 hover:after:w-full after:transition-all after:duration-300 " + (props.className)}>
+        <a 
+            target={openNewTab ? "_blank" : "_self"} 
+            href={props.href} 
+            className={"font-bold text-neutral-300 hover:text-white transition-all duration-300 bg-size-[0%_1px] hover:bg-size-[100%_1px] bg-linear-to-r from-neutral-500 to-neutral-500 bg-no-repeat bg-bottom-left " + (props.className)}
+        >
             {props.children}
         </a>
     )
