@@ -11,7 +11,6 @@ interface BlogPostProps {
 export default function BlogPost(props: BlogPostProps) {
     return (
         <div className="w-full h-screen overflow-y-scroll">
-            <Header />
             <div className="prose prose-invert max-w-none p-8 lg:w-2/3 xl:w-1/2 align-middle mx-auto">
                 <Markdown 
                     remarkPlugins={[remarkGfm]}

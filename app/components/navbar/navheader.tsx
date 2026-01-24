@@ -1,11 +1,25 @@
 import { TbLayoutSidebarLeftExpandFilled } from "react-icons/tb";
+import { CgClose } from "react-icons/cg";
 import Link from "../global/link";
 
-export default function NavHeader() {
+interface NavHeaderProps {
+    setVisible?: (visible: boolean) => void;
+}
+
+export default function NavHeader(props: NavHeaderProps) {
     return (
         <div className="p-4">
-            <div className="text-2xl font-semibold mb-4 flex flex-row justify-between ">
+            <div className="text-2xl font-semibold mb-4 flex flex-row justify-between items-center">
                 <div>Lucas Joel</div>
+                {props.setVisible && (
+                    <button
+                        onClick={() => props.setVisible!(false)}
+                        className="hidden md:block p-2 bg-neutral-800 hover:bg-neutral-700 rounded-lg border border-neutral-700 transition-colors"
+                        aria-label="Close menu"
+                    >
+                        <CgClose className="text-xl" />
+                    </button>
+                )}
             </div>
             <div className="space-y-1 text-sm text-neutral-400 mb-4">
                 <div>CS @ <Link href="https://www.mcmaster.ca/">McMaster University</Link></div>

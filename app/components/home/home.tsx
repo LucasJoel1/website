@@ -5,19 +5,20 @@ import Link from "../global/link";
 
 export default function Home() {
     return (
-        <div className="w-full min-h-screen flex flex-col">
-            <Header />
+        <div className="w-full h-full flex flex-col">
             <div className="p-8 border-b border-neutral-800">
-                <h1 className="text-5xl font-bold mb-3 text-neutral-100">
-                    Lucas Joel
-                </h1>
-                <p className="text-xl text-neutral-400 mb-4">
-                    Computer Science Student & Software Developer
-                </p>
-                <p className="text-base text-neutral-500 max-w-2xl">
-                    Building applications and always learning. Currently studying CS at McMaster University 
-                    with a focus on full-stack development.
-                </p>
+                <div className="md:ml-4">
+                    <h1 className="text-5xl font-bold mb-3 text-neutral-100">
+                        Lucas Joel
+                    </h1>
+                    <p className="text-xl text-neutral-400 mb-4">
+                        Computer Science Student & Software Developer
+                    </p>
+                    <p className="text-base text-neutral-500 max-w-2xl">
+                        Building applications and always learning. Currently studying CS at McMaster University 
+                        with a focus on full-stack development.
+                    </p>
+                </div>
             </div>
 
             <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 p-4 grow">
@@ -87,10 +88,9 @@ export default function Home() {
                         </div>
                     </div>
                 </Card>
-
             </div>
 
-            <div className="w-full p-8 border-t border-neutral-800 bg-neutral-900">
+            <div className="w-full p-8 border-t border-neutral-800 bg-neutral-900 mt-auto">
                 <div className="max-w-3xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-3 text-neutral-100">
                         Let's Work Together

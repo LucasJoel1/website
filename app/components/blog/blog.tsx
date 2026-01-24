@@ -4,14 +4,15 @@ import BlogPostCard from "./blogPostCard";
 export default function Blog() {
     return (
         <div className="w-full max-h-screen flex flex-col">
-            <Header />
             <div className="p-8 border-b border-neutral-800">
-                <h1 className="text-5xl font-bold mb-3 text-neutral-100">
-                    Welcome to the Blog!
-                </h1>
-                <p className="text-xl text-neutral-400 mb-4">
-                    When I learn something new or find something interesting I will write about it here!
-                </p>
+                <div className="md:ml-4">
+                    <h1 className="text-5xl font-bold mb-3 text-neutral-100">
+                        Welcome to the Blog!
+                    </h1>
+                    <p className="text-xl text-neutral-400 mb-4">
+                        When I learn something new or find something interesting I will write about it here!
+                    </p>
+                </div>
             </div>
 
             <div className="overflow-y-scroll flex flex-col gap-2 p-4">
